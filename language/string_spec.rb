@@ -273,7 +273,7 @@ describe "Ruby String literals" do
   end
 
   def long_string_literals
-    "Beautiful is better than ugly." \
+    "Beautiful is better than ugly." +
     "Explicit is better than implicit."
   end
 

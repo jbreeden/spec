@@ -151,7 +151,7 @@ describe "Module#module_function as a toggle (no arguments) in a Module body" do
     x.should == m
   end
 
-  it "stops creating module functions if the body encounters another toggle " \
+  it "stops creating module functions if the body encounters another toggle " +
      "like public/protected/private without arguments" do
     m = Module.new {
           module_function
@@ -166,7 +166,7 @@ describe "Module#module_function as a toggle (no arguments) in a Module body" do
     m.respond_to?(:test3).should == false
   end
 
-  it "does not stop creating module functions if the body encounters " \
+  it "does not stop creating module functions if the body encounters " +
      "public/protected/private WITH arguments" do
     m = Module.new {
           def foo() end

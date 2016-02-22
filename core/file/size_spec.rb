@@ -117,3 +117,4 @@ describe "File#size for an empty file" do
     @file.size.should == 0
   end
 end
+!

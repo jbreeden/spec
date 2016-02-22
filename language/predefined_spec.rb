@@ -1092,14 +1092,14 @@ with_feature :encoding do
       end
 
       it "has the encodings set by #set_encoding"do
-        code = "STDIN.set_encoding Encoding::IBM775, Encoding::IBM866; " \
+        code = "STDIN.set_encoding Encoding::IBM775, Encoding::IBM866; " +
                "p [STDIN.external_encoding.name, STDIN.internal_encoding.name]"
         ruby_exe(code).chomp.should == %{["IBM775", "IBM866"]}
       end
 
       it "retains the encoding set by #set_encoding when Encoding.default_external is changed" do
-        code = "STDIN.set_encoding Encoding::IBM775, Encoding::IBM866; " \
-               "Encoding.default_external = Encoding::ISO_8859_16;" \
+        code = "STDIN.set_encoding Encoding::IBM775, Encoding::IBM866; " +
+               "Encoding.default_external = Encoding::ISO_8859_16;" +
                "p [STDIN.external_encoding.name, STDIN.internal_encoding.name]"
         ruby_exe(code).chomp.should == %{["IBM775", "IBM866"]}
       end
@@ -1125,7 +1125,7 @@ with_feature :encoding do
       end
 
       it "has the encodings set by #set_encoding"do
-        code = "STDOUT.set_encoding Encoding::IBM775, Encoding::IBM866; " \
+        code = "STDOUT.set_encoding Encoding::IBM775, Encoding::IBM866; " +
                "p [STDOUT.external_encoding.name, STDOUT.internal_encoding.name]"
         ruby_exe(code).chomp.should == %{["IBM775", "IBM866"]}
       end
@@ -1151,7 +1151,7 @@ with_feature :encoding do
       end
 
       it "has the encodings set by #set_encoding"do
-        code = "STDERR.set_encoding Encoding::IBM775, Encoding::IBM866; " \
+        code = "STDERR.set_encoding Encoding::IBM775, Encoding::IBM866; " +
                "p [STDERR.external_encoding.name, STDERR.internal_encoding.name]"
         ruby_exe(code).chomp.should == %{["IBM775", "IBM866"]}
       end

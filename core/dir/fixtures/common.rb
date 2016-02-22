@@ -102,13 +102,13 @@ module DirSpecs
   end
 
   def self.create_mock_dirs
-    umask = File.umask 0
+    umask = File.umask 0 if File.respond_to?(:umask)
     mock_dir_files.each do |name|
       file = File.join mock_dir, name
       mkdir_p File.dirname(file)
       touch file
     end
-    File.umask umask
+    File.umask umask if File.respond_to?(:umask)
   end
 
   def self.delete_mock_dirs
