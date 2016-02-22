@@ -1,6 +1,6 @@
 # MRUBY FORK
 
-This fork of `ruby/spec` is modified for running on MRuby.
+This fork of `ruby/spec` is modified for running on MRuby. See [mruby-spec](https://github.com/jbreeden/mruby-spec).
 
 # The Ruby Spec Suite
 
