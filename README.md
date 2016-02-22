@@ -1,3 +1,7 @@
+# MRUBY FORK
+
+This fork of `ruby/spec` is modified for running on MRuby.
+
 # The Ruby Spec Suite
 
 [![Build Status](https://travis-ci.org/ruby/spec.svg)](https://travis-ci.org/ruby/spec)
