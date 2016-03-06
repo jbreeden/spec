@@ -9,7 +9,9 @@ describe "Dir.entries" do
   end
 
   before :each do
-    @internal = Encoding.default_internal
+    with_feature :encoding do
+      @internal = Encoding.default_internal
+    end
   end
 
   after :all do
@@ -17,7 +19,9 @@ describe "Dir.entries" do
   end
 
   after :each do
-    Encoding.default_internal = @internal
+    with_feature :encoding do
+      Encoding.default_internal = @internal
+    end
   end
 
   it "returns an Array of filenames in an existing directory including dotfiles" do
@@ -35,31 +39,35 @@ describe "Dir.entries" do
     Dir.entries(p)
   end
 
-  it "accepts an options Hash" do
-    a = Dir.entries("#{DirSpecs.mock_dir}/deeply/nested", encoding: "utf-8").sort
-    a.should == %w|. .. .dotfile.ext directory|
-  end
+  with_feature :encoding do
+    it "accepts an options Hash" do
+      a = Dir.entries("#{DirSpecs.mock_dir}/deeply/nested", encoding: "utf-8").sort
+      a.should == %w|. .. .dotfile.ext directory|
+    end
 
-  it "returns entries encoded with the filesystem encoding by default" do
-    # This spec depends on the locale not being US-ASCII because if it is, the
-    # entries that are not ascii_only? will be ASCII-8BIT encoded.
-    entries = Dir.entries(File.join(DirSpecs.mock_dir, 'special')).sort
-    encoding = Encoding.find("filesystem")
-    encoding = Encoding::ASCII_8BIT if encoding == Encoding::US_ASCII
-    entries.should include("こんにちは.txt".force_encoding(encoding))
-    entries.first.encoding.should equal(Encoding.find("filesystem"))
-  end
+    it "returns entries encoded with the filesystem encoding by default" do
+      pending
+      
+      # This spec depends on the locale not being US-ASCII because if it is, the
+      # entries that are not ascii_only? will be ASCII-8BIT encoded.
+      entries = Dir.entries(File.join(DirSpecs.mock_dir, 'special')).sort
+      encoding = Encoding.find("filesystem")
+      encoding = Encoding::ASCII_8BIT if encoding == Encoding::US_ASCII
+      entries.should include("こんにちは.txt".force_encoding(encoding))
+      entries.first.encoding.should equal(Encoding.find("filesystem"))
+    end
 
-  it "returns entries encoded with the specified encoding" do
-    dir = File.join(DirSpecs.mock_dir, 'special')
-    entries = Dir.entries(dir, encoding: "euc-jp").sort
-    entries.first.encoding.should equal(Encoding::EUC_JP)
-  end
+    it "returns entries encoded with the specified encoding" do
+      dir = File.join(DirSpecs.mock_dir, 'special')
+      entries = Dir.entries(dir, encoding: "euc-jp").sort
+      entries.first.encoding.should equal(Encoding::EUC_JP)
+    end
 
-  it "returns entries transcoded to the default internal encoding" do
-    Encoding.default_internal = Encoding::EUC_KR
-    entries = Dir.entries(File.join(DirSpecs.mock_dir, 'special')).sort
-    entries.first.encoding.should equal(Encoding::EUC_KR)
+    it "returns entries transcoded to the default internal encoding" do
+      Encoding.default_internal = Encoding::EUC_KR
+      entries = Dir.entries(File.join(DirSpecs.mock_dir, 'special')).sort
+      entries.first.encoding.should equal(Encoding::EUC_KR)
+    end
   end
 
   it "raises a SystemCallError if called with a nonexistent diretory" do
