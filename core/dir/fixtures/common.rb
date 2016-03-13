@@ -21,8 +21,8 @@ module DirSpecs
         'reduced',
         'always_returns_0',
         '???',
-        [0xe9].pack('U')
-      ].each do |dir|
+        ([].respond_to?(:pack) ? [0xe9].pack('U') : nil)
+      ].compact.each do |dir|
         begin
           Dir.rmdir dir
         rescue
@@ -133,7 +133,7 @@ module DirSpecs
     dirs.reverse_each do |d|
       dir = File.join base_dir, d
       if File.exist? dir
-        File.chmod 0777, dir
+        File.chmod 0777, dir if File.respond_to?(:chmod)
         rm_r dir
       end
     end
@@ -144,7 +144,7 @@ module DirSpecs
         dir = File.join base_dir, d
         unless File.exist? dir
           mkdir_p dir
-          File.chmod 0777, dir
+          File.chmod 0777, dir if File.respond_to?(:chmod)
         end
       end
     end
